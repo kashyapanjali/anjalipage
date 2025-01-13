@@ -1,6 +1,8 @@
 /** @format */
 
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
 import "./Home.css";
 
 function Home() {
@@ -21,29 +23,6 @@ function Home() {
 	return (
 		<div className="home">
 			{/* Navigation Bar */}
-			<div className="navbar">
-				<div>
-					<a href="/">Home</a>
-				</div>
-				<div>
-					<a href="/about">About</a>
-				</div>
-				<div>
-					<a href="/work">Recent Work</a>
-				</div>
-				<div>
-					<a href="/skills">Skills</a>
-				</div>
-				<div>
-					<a href="/project">Projects</a>
-				</div>
-				<div>
-					<a href="/blog">Certificate</a>
-				</div>
-				<div>
-					<a href="/contact">Get In Touch</a>
-				</div>
-			</div>
 
 			{/* Hero Section */}
 			<div className="hero">
