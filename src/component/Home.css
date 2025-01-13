@@ -1,93 +1,172 @@
-/* General Reset */
+/**
+ * General Reset
+ *
+ * @format
+ */
+
 body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #121212;
-    color: white;
-  }
-  
-  /* Navigation Bar */
-  .navbar {
-    display: flex;
-    justify-content: space-evenly;
-    padding: 28px 0;
-    background-color: #3d3d3d;
-  }
-  
-  .navbar div a {
-    text-decoration: none;
-    color: white;
-    padding: 10px 15px;
-    transition: all 0.3s ease;
-    font-size: 12px;
-    text-transform: uppercase;
-  }
-  
-  .navbar div a:hover {
-    background-color: #555;
-    color: #fff;
-    border-radius: 5px;
-  }
-  
-  /* Hero Section */
-  .hero {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 50px 10%;
-  }
-  
-  .hero-text {
-    max-width: 50%;
-  }
-  
-  .hero-text h1 {
-    font-size: 48px;
-    margin-bottom: 20px;
-  }
-  
-  .hero-text p {
-    font-size: 18px;
-    line-height: 1.5;
-    margin-bottom: 30px;
-  }
-  
-  .cta-button {
-    background-color: #00c853;
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: 0.3s;
-  }
-  
-  .cta-button:hover {
-    background-color: #009624;
-  }
-  
-  .hero-image .profile-photo {
-    border-radius: 50%;
-    width: 200px;
-    height: 200px;
-  }
-  
-  /* Company Logos */
-  .company-logos {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin: 50px 0;
-  }
-  
-  .logo {
-    background-color: #1e1e1e;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    font-size: 16px;
-    color: white;
-    min-width: 100px;
-  }
-  
+	margin: 0;
+	font-family: "Arial", sans-serif;
+	background-color: #121212;
+	color: white;
+}
+
+/* Navigation Bar */
+.navbar {
+	display: flex;
+	justify-content: center;
+	gap: 80px;
+	padding: 30px 8px;
+	background-color: #3d3d3d;
+	flex-wrap: wrap;
+}
+
+.navbar div a {
+	text-decoration: none;
+	color: white;
+	padding: 8px 10px;
+	transition: all 0.3s ease;
+	font-size: 13px;
+	text-transform: uppercase;
+}
+
+.navbar div a:hover {
+	background-color: #555;
+	color: #fff;
+	border-radius: 5px;
+}
+
+/* Hero Section */
+.hero {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 140px 16%;
+	flex-wrap: wrap;
+	text-align: center;
+}
+
+.hero-text {
+	max-width: 50%;
+	text-align: left;
+}
+
+.hero-text h1 {
+	font-size: 40px;
+	margin-bottom: 15px;
+}
+
+.hero-text p {
+	font-size: 18px;
+	line-height: 1.5;
+	margin-bottom: 20px;
+}
+
+.cta-button {
+	background-color: #00c853;
+	color: white;
+	border: none;
+	padding: 12px 25px;
+	font-size: 14px;
+	cursor: pointer;
+	border-radius: 5px;
+	transition: 0.3s;
+}
+
+.cta-button:hover {
+	background-color: #009624;
+}
+
+.hero-image {
+	margin-top: 20px;
+}
+
+.hero-image .profile-photo {
+	border-radius: 50%;
+	width: 150px;
+	height: 150px;
+}
+
+/* Company Logos */
+.company-logos {
+	display: flex;
+	justify-content: center;
+	gap: 80px;
+	/* padding: 20px 10px; */
+	flex-wrap: wrap;
+}
+
+.logo {
+	border-radius: 10px;
+	text-align: center;
+	color: white;
+	min-width: 40px;
+}
+
+.logo i {
+	font-size: 30px; /* Size of the icons */
+}
+
+/* Media Querie for Responsiveness */
+
+@media (max-width: 780px) {
+	.navbar {
+		gap: 0px;
+		padding: 30px 8px;
+		background-color: #3d3d3d;
+		flex-wrap: wrap;
+	}
+	.navbar div a {
+		/* padding: 8px 10px; */
+		font-size: 12px;
+	}
+}
+
+@media (max-width: 780px) {
+	.hero {
+		flex-direction: column;
+	}
+
+	.hero-text {
+		max-width: 100%;
+		text-align: center;
+	}
+
+	.hero-image .profile-photo {
+		width: 120px;
+		height: 120px;
+	}
+
+	.company-logos {
+		gap: 20px;
+	}
+}
+
+@media (max-width: 480px) {
+	.hero-text h1 {
+		font-size: 28px;
+	}
+
+	.hero-text p {
+		font-size: 14px;
+	}
+
+	.cta-button {
+		padding: 10px 20px;
+		font-size: 12px;
+	}
+
+	.navbar {
+		gap: 5px;
+		padding: 25px 8px;
+		flex-wrap: wrap;
+	}
+
+	.company-logos {
+		margin-bottom: 50px;
+	}
+
+	.logo {
+		min-width: 20px;
+	}
+}
