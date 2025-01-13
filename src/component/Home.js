@@ -1,9 +1,23 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react";
 import "./Home.css";
 
 function Home() {
+	const [imageFile, setImageFile] = useState(null);
+
+	// funtion to handlle image selection
+	const handleImageChange = (e) => {
+		const file = e.target.files[0];
+		if (file) {
+			setImageFile(URL.createObjectURL(file));
+		}
+	};
+
+	const handleCircleClick = () => {
+		document.getElementById("imageInput").click(); // Programmatically trigger file input
+	};
+
 	return (
 		<div className="home">
 			{/* Navigation Bar */}
@@ -44,17 +58,25 @@ function Home() {
 
 					<button className="cta-button">Let’s get started &gt;</button>
 				</div>
-				<div className="hero-image">
+				<div className="hero-image" onClick={handleCircleClick}>
 					<img
-						src="https://via.placeholder.com/200"
+						src={imageFile || "https://via.placeholder.com/200"}
 						alt="Profile"
 						className="profile-photo"
+					/>
+					<input
+						id="imageInput"
+						type="file"
+						accept="image/*"
+						onChange={handleImageChange}
+						style={{ display: "none" }} // Hide the input element
 					/>
 				</div>
 			</div>
 
 			{/* Company Logos */}
 			<div className="company-logos">
+				<div className="contactWith">Touch With:</div>
 				<div className="logo">
 					<a
 						href="https://www.linkedin.com/in/anjalikashyap97/"
