@@ -22,7 +22,7 @@ function Navbar() {
 				<Link to="/project">Projects</Link>
 			</div>
 			<div>
-				<Link to="/blog">Certificate</Link>
+				<Link to="/certificate">Certificate</Link>
 			</div>
 			<div>
 				<Link to="/contact">Get In Touch</Link>

@@ -8,6 +8,8 @@ import Navbar from "./component/Navbar";
 import Work from "./component/Work";
 import Skill from "./component/Skill";
 import Project from "./component/Project";
+import Certificate from "./component/Certificate";
+import Contact from "./component/Contact";
 
 function App() {
 	return (
@@ -19,6 +21,8 @@ function App() {
 				<Route path="/work" element={<Work />} />
 				<Route path="/skills" element={<Skill />} />
 				<Route path="/project" element={<Project />} />
+				<Route path="/certificate" element={<Certificate />} />
+				{/* <Route path="/contact" element={<Contact />} /> */}
 			</Routes>
 		</Router>
 	);

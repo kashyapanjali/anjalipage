@@ -1,8 +1,6 @@
 /** @format */
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-
 import "./Home.css";
 
 function Home() {
@@ -22,8 +20,6 @@ function Home() {
 
 	return (
 		<div className="home">
-			{/* Navigation Bar */}
-
 			{/* Hero Section */}
 			<div className="hero">
 				<div className="hero-text">
