@@ -22,7 +22,7 @@ function App() {
 				<Route path="/skills" element={<Skill />} />
 				<Route path="/project" element={<Project />} />
 				<Route path="/certificate" element={<Certificate />} />
-				{/* <Route path="/contact" element={<Contact />} /> */}
+				<Route path="/contact" element={<Contact />} />
 			</Routes>
 		</Router>
 	);
