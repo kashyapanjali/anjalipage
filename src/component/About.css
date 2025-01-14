@@ -17,9 +17,6 @@
 .about-container2 {
 	flex: 1;
 	max-width: 45%;
-	padding: 20px;
-	border-radius: 10px;
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .about-container1 h1,
@@ -36,11 +33,13 @@
 .education-item h2 {
 	margin-bottom: 8px;
 	font-size: 20px;
+	color: #582d5a;
 }
 
 .education-item p {
 	margin: 0;
 	font-size: 16px;
+	color: #777;
 }
 
 @media (max-width: 768px) {
@@ -48,6 +47,19 @@
 		flex-direction: column;
 		gap: 30px;
 		padding: 20px;
+	}
+
+	.about-container1,
+	.about-container2 {
+		max-width: 100%;
+	}
+}
+
+@media (max-width: 480px) {
+	.about {
+		flex-direction: column;
+		align-items: center;
+		gap: 20px;
 	}
 
 	.about-container1,

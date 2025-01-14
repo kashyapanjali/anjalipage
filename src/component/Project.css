@@ -1,0 +1,43 @@
+/** @format */
+/** @format */
+
+.work {
+	padding: 50px 16%;
+	font-family: "Arial", sans-serif;
+}
+
+.work-title {
+	text-align: center;
+	font-size: 40px;
+	color: #fff;
+	margin-bottom: 30px;
+}
+
+.work-container {
+	display: flex;
+	gap: 50px;
+	justify-content: center;
+}
+
+.work-item {
+	text-align: center;
+}
+
+.work-item h2 {
+	font-size: 24px;
+	color: #582d5a;
+	margin-bottom: 8px;
+}
+
+.work-item p {
+	font-size: 16px;
+	color: #777;
+	line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+	.work-container {
+		flex-direction: column;
+		gap: 20px;
+	}
+}
