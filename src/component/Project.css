@@ -34,6 +34,21 @@
 	color: #777;
 	line-height: 1.5;
 }
+.add-button{
+	margin-bottom: 5px;
+	background-color: #582d5a;
+	color: #fff;
+}
+.project-form{
+	display: flex;
+	flex-direction:column ;
+	gap: 5px;
+	width: 180px;
+}
+.form-buttons{
+	display: flex;
+	gap: 5px;
+}
 
 @media (max-width: 768px) {
 	.work-container {

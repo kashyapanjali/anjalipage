@@ -50,7 +50,11 @@
 .certificate-category ul li a:hover {
 	color: #0056b3;
 }
-
+.add-certificate-button{
+	margin-bottom: 5px;
+	background-color: #582d5a;
+	color: #fff;
+}
 @media (max-width: 768px) {
 	.certificate-container {
 		flex-direction: column;

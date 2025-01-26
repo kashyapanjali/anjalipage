@@ -42,6 +42,19 @@
 	line-height: 1.5;
 	color: #666;
 }
+.add-skill-button{
+	margin-bottom: 5px;
+	background-color: #582d5a;
+	color: #fff;
+}
+.form-buttons{
+	display: flex;
+	gap: 5px;
+}
+.dropdown{
+	margin-right: 6px;
+}
+
 
 @media (max-width: 768px) {
 	.skills-container {
