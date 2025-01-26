@@ -8,7 +8,7 @@ function Work() {
 	const [projectName, setProjectName] = useState("");
 	const [projectDescription, setProjectDescription] = useState("");
 	const [projectLink, setProjectLink] = useState("");
-	const [isAdding, setIsAdding] = useState(false);
+	const [editIndex, setEditIndex] = useState(null);
 	const [workItems, setWorkItems] = useState([
 		{
 			category: "Continue with",
@@ -25,37 +25,57 @@ function Work() {
 		},
 	]);
 
-	// Handles adding a new work item
-	const handleAddWork = () => {
+	// Handles adding or editing a work item
+	const handleSaveWork = () => {
 		if (!projectName || !projectDescription || !projectLink) {
 			alert("Please fill in all fields.");
 			return;
 		}
 
 		const newWorkItem = {
-			category: activeOption,
+			category: activeOption.includes("Continue") ? "Continue with" : "Completed Project",
 			name: projectName,
 			link: projectLink,
 			description: projectDescription,
 		};
 
-		setWorkItems([...workItems, newWorkItem]);
-		setActiveOption(null);
-		setShowOptions(false);
-		setIsAdding(false);
-		setProjectName("");
-		setProjectDescription("");
-		setProjectLink("");
+		if (editIndex !== null) {
+			// Update the existing work item
+			const updatedWorkItems = [...workItems];
+			updatedWorkItems[editIndex] = newWorkItem;
+			setWorkItems(updatedWorkItems);
+		} else {
+			// Add a new work item
+			setWorkItems([...workItems, newWorkItem]);
+		}
+
+		resetForm();
 	};
 
 	// Handles cancel button click
 	const handleCancel = () => {
+		resetForm();
+	};
+
+	// Resets the form and state
+	const resetForm = () => {
 		setActiveOption(null);
 		setShowOptions(false);
-		setIsAdding(false);
 		setProjectName("");
 		setProjectDescription("");
 		setProjectLink("");
+		setEditIndex(null);
+	};
+
+	// Handles editing an ongoing project
+	const handleEdit = (index) => {
+		const itemToEdit = workItems[index];
+		setProjectName(itemToEdit.name);
+		setProjectDescription(itemToEdit.description);
+		setProjectLink(itemToEdit.link);
+		setActiveOption("Edit Continue Project");
+		setEditIndex(index);
+		setShowOptions(false);
 	};
 
 	return (
@@ -65,16 +85,19 @@ function Work() {
 				{/* Render existing work items */}
 				{workItems.map((item, index) => (
 					<div className="work-item" key={index}>
-						<h2>
-							{/* Show only the project name if it's a completed project */}
-							{item.category === "Completed Project" ? item.name : item.category}
-						</h2>
+						<h2>{item.category === "Completed Project" ? item.name : item.category}</h2>
 						{item.link && (
 							<a href={item.link} target="_blank" rel="noopener noreferrer">
 								Link
 							</a>
 						)}
 						<p>{item.description}</p>
+						{/* Show edit button only for ongoing projects */}
+						{item.category === "Continue with" && (
+							<button className="edit-button" onClick={() => handleEdit(index)}>
+								Edit
+							</button>
+						)}
 					</div>
 				))}
 			</div>
@@ -87,16 +110,23 @@ function Work() {
 			{/* Show options when the add button is clicked */}
 			{showOptions && (
 				<div className="options">
+					{/* Option to add a new ongoing project */}
 					<button
-						onClick={() => setActiveOption("Continue Project")}
+						onClick={() => {
+							setActiveOption("Add Continue Project");
+						}}
 						className={`option-button ${
-							activeOption === "Continue Project" ? "active" : ""
+							activeOption === "Add Continue Project" ? "active" : ""
 						}`}
 					>
-						Continue Project
+						Add Continue Project
 					</button>
+
+					{/* Option for completed project */}
 					<button
-						onClick={() => setActiveOption("Completed Project")}
+						onClick={() => {
+							setActiveOption("Completed Project");
+						}}
 						className={`option-button ${
 							activeOption === "Completed Project" ? "active" : ""
 						}`}
@@ -127,8 +157,8 @@ function Work() {
 						value={projectDescription}
 						onChange={(e) => setProjectDescription(e.target.value)}
 					></textarea>
-					<button onClick={handleAddWork} className="save-button">
-						Add Work
+					<button onClick={handleSaveWork} className="save-button">
+						{editIndex !== null ? "Save Changes" : "Add Work"}
 					</button>
 					<button onClick={handleCancel} className="cancel-button">
 						Cancel
