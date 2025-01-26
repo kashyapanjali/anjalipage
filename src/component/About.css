@@ -42,6 +42,10 @@
 	color: #777;
 }
 
+.instituteLink, a{
+	text-decoration: none;
+}
+
 @media (max-width: 768px) {
 	.about {
 		flex-direction: column;
