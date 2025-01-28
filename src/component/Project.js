@@ -1,10 +1,10 @@
 /** @format */
 
-import React, { useState } from "react";
+import React from "react";
 import "./Project.css";
 
 function Project() {
-	const [projects, setProjects] = useState([
+	const projects = [
 		{
 			title: "Docify (2024)",
 			link: "https://github.com/PratyushPoddar07/nutrinerds",
@@ -17,31 +17,7 @@ function Project() {
 			description:
 				"A project designed to provide users with real-time weather updates and forecasts based on their location. Built with HTML, CSS, and JavaScript, the app integrates OpenWeatherMap's API to fetch accurate weather data. Features include location-based forecast and collecting user feedback.",
 		},
-	]);
-
-	const [newTitle, setNewTitle] = useState("");
-	const [newLink, setNewLink] = useState("");
-	const [newDescription, setNewDescription] = useState("");
-	const [isAdding, setIsAdding] = useState(false);
-
-	const handleAddProject = () => {
-		if (!newTitle || !newDescription) {
-			alert("Please fill in all required fields.");
-			return;
-		}
-
-		const newProject = {
-			title: newTitle,
-			link: newLink || "#", // Default link if none is provided
-			description: newDescription,
-		};
-
-		setProjects([...projects, newProject]);
-		setNewTitle("");
-		setNewLink("");
-		setNewDescription("");
-		setIsAdding(false);
-	};
+	];
 
 	return (
 		<div className="work">
@@ -57,42 +33,6 @@ function Project() {
 					</div>
 				))}
 			</div>
-
-			{/* Add Project Button */}
-			<button className="add-button" onClick={() => setIsAdding(true)}>
-				+
-			</button>
-
-			{/* Form for Adding New Projects */}
-			{isAdding && (
-				<div className="project-form">
-					<input
-						type="text"
-						placeholder="Project Title"
-						value={newTitle}
-						onChange={(e) => setNewTitle(e.target.value)}
-					/>
-					<input
-						type="text"
-						placeholder="Project Link (optional)"
-						value={newLink}
-						onChange={(e) => setNewLink(e.target.value)}
-					/>
-					<textarea
-						placeholder="Project Description"
-						value={newDescription}
-						onChange={(e) => setNewDescription(e.target.value)}
-					></textarea>
-					<div className="form-buttons">
-						<button onClick={handleAddProject} className="save-button">
-							Save Project
-						</button>
-						<button onClick={() => setIsAdding(false)} className="cancel-button">
-							Cancel
-						</button>
-					</div>
-				</div>
-			)}
 		</div>
 	);
 }

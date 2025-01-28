@@ -1,97 +1,123 @@
-/** @format */
 import React, { useState } from "react";
+import axios from "axios";
 import "./Skill.css";
 
 function Skill() {
-	const [skills, setSkills] = useState({
-		"Frontend Development": ["HTML", "CSS", "JavaScript", "React.js", "Redux"],
-		"Backend Development": ["Node.js", "Express.js", "REST APIs", "WebSocket"],
-		"Database Management": ["MySQL", "PostgreSQL", "MongoDB"],
-		"Other Tools": ["Git & GitHub", "Postman","Chrome DevTools", "Leaflet"],
-	});
+    const [skills, setSkills] = useState({
+        frontend: ["HTML", "CSS", "JavaScript", "React.js", "Redux"],
+        backend: ["Node.js", "Express.js", "REST APIs", "WebSocket"],
+        database: ["MySQL", "PostgreSQL", "MongoDB"],
+        tools: ["Git & GitHub", "Postman", "Chrome DevTools", "Leaflet"]
+    });
 
-	const [showForm, setShowForm] = useState(false);
-	const [selectedCategory, setSelectedCategory] = useState("");
-	const [newSkill, setNewSkill] = useState("");
+    const [showForm, setShowForm] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [newSkills, setNewSkills] = useState("");
+    const [message, setMessage] = useState("");
 
-	// Handles adding a new skill to the selected category
-	const handleAddSkill = () => {
-		if (!selectedCategory || newSkill.trim() === "") {
-			alert("Please select a category and enter a skill.");
-			return;
-		}
+    // Handle adding new skills
+    const handleAddSkill = async () => {
+        if (!selectedCategory || newSkills.trim() === "") {
+            setMessage("Please select a category and enter skills");
+            return;
+        }
 
-		setSkills((prevSkills) => ({
-			...prevSkills,
-			[selectedCategory]: [...prevSkills[selectedCategory], newSkill],
-		}));
+        try {
+            // Convert comma-separated skills to array
+            const skillsArray = newSkills.split(',').map(skill => skill.trim());
 
-		setNewSkill("");
-		setSelectedCategory("");
-		setShowForm(false);
-	};
+            const response = await axios.post(
+                'http://localhost:5000/api/users/admin/skills',
+                {
+                    category: selectedCategory,
+                    skills: skillsArray
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'admin-key': 'anjalikashyap9608'
+                    }
+                }
+            );
 
-	return (
-		<div className="skills">
-			<h1 className="skills-title">My Skills</h1>
+            // Update local state with new skills
+            setSkills(prevSkills => ({
+                ...prevSkills,
+                [selectedCategory]: [...prevSkills[selectedCategory], ...skillsArray]
+            }));
 
-			{/* Skills categories */}
-			<div className="skills-container">
-				{Object.keys(skills).map((category) => (
-					<div className="skills-category" key={category}>
-						<h2>{category}</h2>
-						<ul>
-							{skills[category].map((skill, index) => (
-								<li key={index}>{skill}</li>
-							))}
-						</ul>
-					</div>
-				))}
-			</div>
+            setMessage("Skills added successfully!");
+            setNewSkills("");
+            setSelectedCategory("");
+            setShowForm(false);
+        } catch (error) {
+            console.error('Error adding skills:', error);
+            setMessage('Error adding skills. Please try again.');
+        }
+    };
 
-			{/* Add Skill Button */}
-			<button className="add-skill-button" onClick={() => setShowForm(true)}>
-				+
-			</button>
+    return (
+        <div className="skills">
+            <h1 className="skills-title">My Skills</h1>
 
-			{/* Add Skill Form */}
-			{showForm && (
-				<div className="add-skill-form">
-					{/* Select Category */}
-					<select
-					className="dropdown"
-						value={selectedCategory}
-						onChange={(e) => setSelectedCategory(e.target.value)}
-					>
-						<option value="">Select Category</option>
-						{Object.keys(skills).map((category) => (
-							<option key={category} value={category}>
-								{category}
-							</option>
-						))}
-					</select>
+            {/* Skills categories */}
+            <div className="skills-container">
+                {Object.entries(skills).map(([category, skillList]) => (
+                    <div className="skills-category" key={category}>
+                        <h2>
+                            {category.charAt(0).toUpperCase() + category.slice(1)} Development
+                        </h2>
+                        <ul>
+                            {skillList.map((skill, index) => (
+                                <li key={index}>{skill}</li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
+            </div>
 
-					{/* Input New Skill */}
-					<input
-						type="text"
-						placeholder="Enter new skill"
-						value={newSkill}
-						onChange={(e) => setNewSkill(e.target.value)}
-					/>
+            {/* Add Skill Button */}
+            <button className="add-skill-button" onClick={() => setShowForm(true)}>
+                +
+            </button>
 
-					{/* Form Buttons */}
-					<div className="form-buttons">
-						<button onClick={handleAddSkill} className="save-button">
-							Add Skill
-						</button>
-						<button onClick={() => setShowForm(false)} className="cancel-button">
-							Cancel
-						</button>
-					</div>
-				</div>
-			)}
-		</div>
-	);
+            {/* Add Skill Form */}
+            {showForm && (
+                <div className="add-skill-form">
+                    <select
+                        className="dropdown"
+                        value={selectedCategory}
+                        onChange={(e) => setSelectedCategory(e.target.value)}
+                    >
+                        <option value="">Select Category</option>
+                        <option value="frontend">Frontend</option>
+                        <option value="backend">Backend</option>
+                        <option value="database">Database</option>
+                        <option value="tools">Tools</option>
+                    </select>
+
+                    <input
+                        type="text"
+                        placeholder="Enter skills (comma-separated)"
+                        value={newSkills}
+                        onChange={(e) => setNewSkills(e.target.value)}
+                    />
+
+                    <div className="form-buttons">
+                        <button onClick={handleAddSkill} className="save-button">
+                            Add Skills
+                        </button>
+                        <button onClick={() => setShowForm(false)} className="cancel-button">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {/* Message display */}
+            {message && <p className="message">{message}</p>}
+        </div>
+    );
 }
 
 export default Skill;
