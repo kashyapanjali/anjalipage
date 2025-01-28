@@ -1,9 +1,9 @@
-/** @format */
-
 .contact {
 	padding: 50px 16%;
 	font-family: "Arial", sans-serif;
 	text-align: center;
+	position: relative;
+	overflow: hidden;
 }
 
 .contact-title {
@@ -24,6 +24,8 @@
 	margin: 10px;
 	padding: 15px;
 	text-align: center;
+	position: relative;
+	animation: moveRandom 3s ease-in-out infinite;
 }
 
 .contact-item h2 {
@@ -49,9 +51,50 @@
 	color: #333;
 }
 
+/* Keyframes for random movement */
+@keyframes moveRandom {
+	0% {
+		transform: translateX(0);
+	}
+	25% {
+		transform: translateX(-20px);
+	}
+	50% {
+		transform: translateX(20px);
+	}
+	75% {
+		transform: translateX(-10px);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
+/* Additional media query for responsiveness */
 @media (max-width: 768px) {
 	.contact-container {
 		flex-direction: column;
 		gap: 20px;
+	}
+	.contact-item {
+		animation: moveRandomMobile 3s ease-in-out infinite;
+	}
+}
+
+@keyframes moveRandomMobile {
+	0% {
+		transform: translateX(0);
+	}
+	25% {
+		transform: translateX(-10px);
+	}
+	50% {
+		transform: translateX(10px);
+	}
+	75% {
+		transform: translateX(-5px);
+	}
+	100% {
+		transform: translateX(0);
 	}
 }
