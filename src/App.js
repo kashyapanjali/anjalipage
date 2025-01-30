@@ -10,6 +10,8 @@ import Skill from "./component/Skill";
 import Project from "./component/Project";
 import Certificate from "./component/Certificate";
 import Contact from "./component/Contact";
+import AdminLogin from "./component/AdminLogin";
+import Admin from "./component/Admin";
 
 function App() {
 	return (
@@ -17,6 +19,8 @@ function App() {
 			<Navbar />
 			<Routes>
 				<Route path="/" element={<Home />} />
+				<Route path="/login" element={<AdminLogin />} />
+				<Route path="/admin" element={<Admin/>} />
 				<Route path="/about" element={<About />} />
 				<Route path="/work" element={<Work />} />
 				<Route path="/skills" element={<Skill />} />

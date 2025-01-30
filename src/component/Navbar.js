@@ -27,6 +27,10 @@ function Navbar() {
 			<div>
 				<Link to="/contact">Get In Touch</Link>
 			</div>
+			<div>
+				<Link to="/login">Me😊</Link>
+				{/* this is admin panel only admin adjust*/}
+			</div>
 		</div>
 	);
 }
