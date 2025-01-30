@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { fetchPortfolio } from "../api"; // Import API call function
 import { io } from "socket.io-client";
 import "./Certificate.css";
 
@@ -18,12 +19,20 @@ function Certificate() {
   };
 
   useEffect(() => {
+    // Fetch portfolio data on mount
+    const getPortfolioData = async () => {
+        const data = await fetchPortfolio();
+        if (data?.certificates) setCertificates(data.certificates);
+    };
+
+    getPortfolioData();
+
     // Listen for real-time updates
-    socket.on("updatePortfolio", (data) => {
-      if (data.certificates) setCertificates(data.certificates);
+    socket.on("portfolioUpdated", (data) => {
+        if (data.certificates) setCertificates(data.certificates);
     });
 
-    return () => socket.off("updatePortfolio");
+    return () => socket.off("portfolioUpdated");
   }, []);
 
   return (

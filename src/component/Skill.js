@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { fetchPortfolio } from "../api"; // Import API call function
 import { io } from "socket.io-client";
 import "./Skill.css";
 
@@ -13,12 +14,20 @@ function Skill() {
   });
 
   useEffect(() => {
+    // Fetch portfolio data on mount
+    const getPortfolioData = async () => {
+        const data = await fetchPortfolio();
+        if (data?.skills) setSkills(data.skills);
+    };
+
+    getPortfolioData();
+
     // Listen for real-time updates
-    socket.on("updatePortfolio", (data) => {
-      if (data.skills) setSkills(data.skills);
+    socket.on("portfolioUpdated", (data) => {
+        if (data.skills) setSkills(data.skills);
     });
 
-    return () => socket.off("updatePortfolio");
+    return () => socket.off("portfolioUpdated");
   }, []);
 
   return (
