@@ -10,9 +10,17 @@ function Skill() {
     frontend: [],
     backend: [],
     database: [],
-    tools: []
+    tools: [],  //add here tools&Technology
+    others:[""]
   });
 
+  const categoryDisplayNames = {
+    frontend: "Frontend ",
+    backend: "Backend ",
+    database: "Database",
+    tools: "Tools & Technologies", // Updated category name
+    others:"Language"
+  };
   useEffect(() => {
     // Fetch portfolio data on mount
     const getPortfolioData = async () => {
@@ -36,7 +44,7 @@ function Skill() {
       <div className="skills-container">
         {Object.entries(skills).map(([category, skillList]) => (
           <div className="skills-category" key={category}>
-            <h2>{category.charAt(0).toUpperCase() + category.slice(1)} Development</h2>
+            <h2>{categoryDisplayNames[category] || category.charAt(0).toUpperCase() + category.slice(1)}</h2>
             <ul>
               {skillList.map((skill, index) => (
                 <li key={index}>{skill}</li>

@@ -16,6 +16,7 @@ const Admin = () => {
     backend: [],
     database: [],
     tools: [],
+    others:[]
   });
   const [certificates, setCertificates] = useState({
     Internship: [],
@@ -192,7 +193,7 @@ const Admin = () => {
         <div className="admin-section">
           <h3>Skills Management</h3>
           <div className="skills-container">
-            {Object.entries(skills).map(([category, skillList]) => (
+            {Object.entries(skills).map(([category, skillList]) => ( //add new dropdown others
               <div key={category} className="skills-category">
                 <h4>{category.charAt(0).toUpperCase() + category.slice(1)}</h4>
                 <ul>

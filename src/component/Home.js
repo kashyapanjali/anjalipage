@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchPortfolio } from "../api"; // Ensure correct path
+import { fetchPortfolio } from "../api";
 import { io } from "socket.io-client";
 import "./Home.css";
 
@@ -43,7 +43,7 @@ function Home() {
                 {/* Profile Image (Read-Only) */}
                 <div className="hero-image">
                     <img
-                        src={profilePic} // ✅ Corrected to use profilePic
+                        src={profilePic} 
                         alt="Profile"
                         className="profile-photo"
                     />

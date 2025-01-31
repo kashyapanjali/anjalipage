@@ -10,7 +10,7 @@ function About() {
 				<h1>Pursuing</h1>
 				<div className="education-item">
 					<h2>Bachelor of Technology (B.Tech)</h2>
-					<p>Driems University</p>
+					<p>Driems University(Odisha)</p>
 					<p>2022 - 2026</p>
 					<p>CGPA:9.39</p>
 					<p className="instituteLink"><a href="https://www.driems.ac.in/">College Link</a></p>
@@ -20,7 +20,7 @@ function About() {
 				<h1>Highest Degree</h1>
 				<div className="education-item">
 					<h2>Senior Secondary Education</h2>
-					<p>Sushant Public School</p>
+					<p>Sushant Public School(Bihar-Muzaffarpur)</p>
 					<p>2019 - 2021</p>
 					<p>Marks:72%</p>
 					<p className="instituteLink"><a href ="https://www.justdial.com/Muzaffarpur/Sushant-public-school-Nunfara-Piar/9999PX621-X621-220819223206-C5Z1_BZDET">School link</a></p>
@@ -28,7 +28,7 @@ function About() {
 				</div>
 				<div className="education-item">
 					<h2>Secondary Education</h2>
-					<p>Sushant Public School</p>
+					<p>Sushant Public School(Bihar-Muzaffarpur)</p>
 					<p>2017 - 2019</p>
 					<p>Marks:80%</p>
 					<p className="instituteLink"><a href ="https://www.justdial.com/Muzaffarpur/Sushant-public-school-Nunfara-Piar/9999PX621-X621-220819223206-C5Z1_BZDET">School link</a></p>
