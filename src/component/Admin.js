@@ -33,18 +33,45 @@ const Admin = () => {
 
   const API_BASE_URL = "http://localhost:5000/api/users";
 
-  // Admin Authentication Check
+  const fetchData = async () => {
+    try {
+      // Retrieve token from localStorage
+      const token = localStorage.getItem("token");
+  
+      if (!token) {
+        console.error("No token found. Redirecting to login.");
+        navigate("/login");
+        return;
+      }
+  
+      console.log("Token from localStorage:", token); // Log the token
+  
+      // Send Token in Request Headers
+      const response = await axios.get("http://localhost:5000/api/users/admin-dashboard", {
+        headers: {
+          Authorization: `Bearer ${token}`, // Attach token in the Authorization header
+        },
+      });
+  
+      console.log("Admin Data Fetched:", response.data);
+    } catch (error) {
+      console.error("Error fetching admin data:", error.response?.data?.message || error.message);
+    }
+  };
+  
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser && currentUser.email === "anjali.official7061@gmail.com") {
-        setUser(currentUser); // Set the admin user
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);
+        await fetchData(); // Fetch data after login
       } else {
         navigate("/login");
       }
     });
-
+  
     return () => unsubscribe();
   }, [navigate]);
+  
 
   // Handle Profile Picture Upload
   const handleProfilePicUpload = async (e) => {

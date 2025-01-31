@@ -9,29 +9,34 @@ const AdminLogin = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const adminEmails = ["anjali.official7061@gmail.com"]; // Admin emails list
+  const adminEmails = ["anjali.official7061@gmail.com"]; // List of admin emails
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    setError("");
-
+    e.preventDefault(); // Prevent form reload
+  
     try {
-      // Sign in using Firebase
-      await signInWithEmailAndPassword(auth, email, password);
-
-      // Verify if the user is an admin
-      if (!adminEmails.includes(email)) {
-        setError("Access denied: You are not an admin.");
-        return;
-      }
-
-      // Redirect to admin panel if admin
+      // Sign in with Firebase Authentication
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+  
+      // ✅ Get Firebase ID Token
+      const token = await user.getIdToken(); // Get the ID token after successful login
+  
+      // ✅ Store Token in LocalStorage
+      localStorage.setItem("token", token);
+  
+      console.log("Admin logged in successfully!");
+      console.log("Token retrieved:", token); // Log the token for debugging
+  
+      // ✅ Redirect to Admin Dashboard
       navigate("/admin");
-    } catch (err) {
-      setError("Login failed. Please check your credentials.");
+  
+    } catch (error) {
+      console.error("Login failed:", error.message);
+      setError("Invalid credentials. Please try again.");
     }
   };
-
+  
   return (
     <div>
       <h2>Admin Login</h2>
@@ -42,6 +47,7 @@ const AdminLogin = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          autoComplete="email"
         />
         <input
           type="password"
@@ -49,6 +55,7 @@ const AdminLogin = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          autoComplete="current-password"
         />
         <button type="submit">Login</button>
       </form>
