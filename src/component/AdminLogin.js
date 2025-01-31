@@ -9,8 +9,6 @@ const AdminLogin = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const adminEmails = ["anjali.official7061@gmail.com"]; // List of admin emails
-
   const handleLogin = async (e) => {
     e.preventDefault(); // Prevent form reload
   

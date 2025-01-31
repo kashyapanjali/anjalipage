@@ -73,21 +73,23 @@ const Admin = () => {
   }, [navigate]);
   
 
-  // Handle Profile Picture Upload
   const handleProfilePicUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
+  
     try {
+      const token = await user.getIdToken(); // Fetch token from Firebase auth
+  
       const formData = new FormData();
       formData.append("profilePic", file);
-
+  
       const response = await axios.put(`${API_BASE_URL}/admin/profile-pic`, formData, {
         headers: {
+          Authorization: `Bearer ${token}`, // Attach the token
           "Content-Type": "multipart/form-data",
         },
       });
-
+  
       setProfilePic(response.data.profilePic);
       setMessage("Profile picture updated successfully!");
       socket.emit("portfolioUpdated", { profilePic: response.data.profilePic, skills, certificates });
@@ -96,22 +98,27 @@ const Admin = () => {
       setMessage("Failed to update profile picture.");
     }
   };
-
-  // Add Skill to Database
+  
   const handleAddSkill = async () => {
     if (!selectedSkillCategory || newSkill.trim() === "") {
       setMessage("Please select a category and enter a skill.");
       return;
     }
-
+  
     try {
+      const token = await user.getIdToken(); // Fetch token from Firebase auth
+  
       const skillsArray = newSkill.split(",").map((skill) => skill.trim());
-
+  
       await axios.post(`${API_BASE_URL}/admin/skills`, {
         category: selectedSkillCategory,
         skills: skillsArray,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Attach the token
+        },
       });
-
+  
       const updatedSkills = { ...skills, [selectedSkillCategory]: [...skills[selectedSkillCategory], ...skillsArray] };
       setSkills(updatedSkills);
       setMessage("Skills added successfully!");
@@ -124,20 +131,25 @@ const Admin = () => {
       setMessage("Error adding skill. Please try again.");
     }
   };
-
-  // Add Certificate to Database
+  
   const handleAddCertificate = async () => {
     if (!selectedCertCategory || !newCertLink.trim()) {
       setMessage("Please select a category and enter a certificate link.");
       return;
     }
-
+  
     try {
+      const token = await user.getIdToken(); // Fetch token from Firebase auth
+  
       await axios.post(`${API_BASE_URL}/admin/certificates`, {
         category: selectedCertCategory,
         link: newCertLink,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Attach the token
+        },
       });
-
+  
       const updatedCertificates = { ...certificates };
       updatedCertificates[selectedCertCategory].push(newCertLink);
       setCertificates(updatedCertificates);
@@ -151,7 +163,7 @@ const Admin = () => {
       setMessage("Error adding certificate. Please try again.");
     }
   };
-
+  
   // Handle Logout
   const handleLogout = async () => {
     try {
