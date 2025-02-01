@@ -17,16 +17,16 @@ const AdminLogin = () => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
   
-      // ✅ Get Firebase ID Token
+      // Get Firebase ID Token
       const token = await user.getIdToken(); // Get the ID token after successful login
   
-      // ✅ Store Token in LocalStorage
+      // Store Token in LocalStorage
       localStorage.setItem("token", token);
   
       console.log("Admin logged in successfully!");
       console.log("Token retrieved:", token); // Log the token for debugging
   
-      // ✅ Redirect to Admin Dashboard
+      //Redirect to Admin Dashboard
       navigate("/admin");
   
     } catch (error) {

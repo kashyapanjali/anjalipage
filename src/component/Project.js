@@ -8,7 +8,7 @@ function Project() {
 		{
 			title:"LocationAccess App (2024)",
             link:"https://locationwithtoken.netlify.app/",
-			description:"A React-based web app allowing users to share real-time location embeded in tokens with full of Security. Features include WebSocket updates, React frontend, Express Node.Js for backend ,storing the data of authentication use MYSQL."
+			description:"A React-based web app allowing users to share real-time location embeded in tokens with full of Security. Features include WebSocket updates, CSS React JavaScript frontend, Express Node.Js for backend ,storing the data of authentication use MYSQL."
 		},
 		{
 			title: "Docify (2024)",

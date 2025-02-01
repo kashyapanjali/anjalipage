@@ -12,7 +12,7 @@ function Work() {
 					<a href="https://github.com/kashyapanjali/anjalipage" target="_blank" rel="noopener noreferrer">
 						Link
 					</a>
-					<p>I'm building my portfolio using MongoDB, React.js, Express.js, and Node.js, leveraging WebSocket technology to enable real-time updates on the portfolio page, seamlessly managed by the Admin.</p>				</div>
+					<p>I'm building my portfolio using HTML,CSS,JavaScript, MongoDB, React.js, Express.js, and Node.js, leveraging WebSocket technology to enable real-time updates on the portfolio page, seamlessly managed by the Admin.</p>				</div>
 			</div>
 		</div>
 	);

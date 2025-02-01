@@ -14,12 +14,12 @@ function Certificate() {
 
   const categoryDisplayNames = {
     Internship: "Intern Certificates",
-    Course: "Course Certificates",
-    Completion: "Completion Certificates"
+    Course: "Course&Interest Certificates",
+    Completion: "Other Certificates"
   };
 
   useEffect(() => {
-    // ✅ Fetch portfolio data on mount
+    // Fetch portfolio data on mount
     const getPortfolioData = async () => {
       const data = await fetchPortfolio();
       if (data?.certificates) {
@@ -33,7 +33,7 @@ function Certificate() {
 
     getPortfolioData();
 
-    // ✅ Listen for real-time updates
+    // Listen for real-time updates
     socket.on("portfolioUpdated", (data) => {
       console.log("WebSocket Update Received:", data);
       if (data?.certificates) {
