@@ -3,7 +3,7 @@ import { fetchPortfolio } from "../api";
 import { io } from "socket.io-client";
 import "./Home.css";
 
-const socket = io("http://localhost:5000");
+const socket = io("https://anjalipagebackend.onrender.com");
 
 function Home() {
     const [profilePic, setProfilePic] = useState("https://via.placeholder.com/200");

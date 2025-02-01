@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // API Base URL
-const API_BASE_URL = "http://localhost:5000/api/users";
+const API_BASE_URL = "https://anjalipagebackend.onrender.com/api/users";
 
 // Fetch portfolio data
 export const fetchPortfolio = async () => {

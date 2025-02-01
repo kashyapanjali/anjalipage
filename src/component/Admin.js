@@ -6,7 +6,7 @@ import axios from "axios";
 import { io } from "socket.io-client";
 import "./Admin.css";
 
-const socket = io("http://localhost:5000");
+const socket = io("https://anjalipagebackend.onrender.com");
 
 const Admin = () => {
   const [user, setUser] = useState(null);
@@ -32,7 +32,7 @@ const Admin = () => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  const API_BASE_URL = "http://localhost:5000/api/users";
+  const API_BASE_URL = "https://anjalipagebackend.onrender.com/api/users";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,7 +46,7 @@ const Admin = () => {
   
         console.log("Token from localStorage:", token);
   
-        const response = await axios.get("http://localhost:5000/api/users/admin-dashboard", {
+        const response = await axios.get(`${API_BASE_URL}/admin-dashboard`, {
           headers: { Authorization: `Bearer ${token}` },
         });
   

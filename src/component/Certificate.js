@@ -3,7 +3,7 @@ import { fetchPortfolio } from "../api"; // API call function
 import { io } from "socket.io-client";
 import "./Certificate.css";
 
-const socket = io("http://localhost:5000");
+const socket = io("https://anjalipagebackend.onrender.com");
 
 function Certificate() {
   const [certificates, setCertificates] = useState({

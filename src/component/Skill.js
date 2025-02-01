@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 import { fetchPortfolio } from "../api";
 import "./Skill.css";
 
-const socket = io("http://localhost:5000");
+const socket = io("https://anjalipagebackend.onrender.com");
 
 function Skill() {
   const [skills, setSkills] = useState({
