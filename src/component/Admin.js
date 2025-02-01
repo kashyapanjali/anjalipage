@@ -34,44 +34,39 @@ const Admin = () => {
 
   const API_BASE_URL = "http://localhost:5000/api/users";
 
-  const fetchData = async () => {
-    try {
-      // Retrieve token from localStorage
-      const token = localStorage.getItem("token");
-  
-      if (!token) {
-        console.error("No token found. Redirecting to login.");
-        navigate("/login");
-        return;
-      }
-  
-      console.log("Token from localStorage:", token); // Log the token
-  
-      // Send Token in Request Headers
-      const response = await axios.get("http://localhost:5000/api/users/admin-dashboard", {
-        headers: {
-          Authorization: `Bearer ${token}`, // Attach token in the Authorization header
-        },
-      });
-  
-      console.log("Admin Data Fetched:", response.data);
-    } catch (error) {
-      console.error("Error fetching admin data:", error.response?.data?.message || error.message);
-    }
-  };
-  
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.error("No token found. Redirecting to login.");
+          navigate("/login");
+          return;
+        }
+  
+        console.log("Token from localStorage:", token);
+  
+        const response = await axios.get("http://localhost:5000/api/users/admin-dashboard", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+  
+        console.log("Admin Data Fetched:", response.data);
+      } catch (error) {
+        console.error("Error fetching admin data:", error.response?.data?.message || error.message);
+      }
+    };
+  
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
-        await fetchData(); // Fetch data after login
+        await fetchData(); // Now it's inside useEffect, no dependency issue
       } else {
         navigate("/login");
       }
     });
   
     return () => unsubscribe();
-  }, [navigate]);
+  }, [navigate]); // Only `navigate` is a dependency
   
 
   const handleProfilePicUpload = async (e) => {
