@@ -22,11 +22,7 @@ const AdminLogin = () => {
   
       // Store Token in LocalStorage
       localStorage.setItem("token", token);
-  
-      console.log("Admin logged in successfully!");
-      console.log("Token retrieved:", token); // Log the token for debugging
-  
-      //Redirect to Admin Dashboard
+        // Redirect to Admin Dashboard
       navigate("/admin");
   
     } catch (error) {
