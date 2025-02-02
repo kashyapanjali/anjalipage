@@ -43,7 +43,7 @@ function Home() {
                 {/* Profile Image (Read-Only) */}
                 <div className="hero-image">
                     <img
-                        src={profilePic} 
+                        src={profilePic || "https://via.placeholder.com/200"}
                         alt="Profile"
                         className="profile-photo"
                     />
