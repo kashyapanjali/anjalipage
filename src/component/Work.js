@@ -8,11 +8,27 @@ function Work() {
 			<h1 className="work-title">Recent Work Project</h1>
 			<div className="work-container">
 				<div className="work-item">
-					<h2>Continue with - My portfolio</h2>
-					<a href="https://github.com/kashyapanjali/anjalipage" target="_blank" rel="noopener noreferrer">
+					<h2>Continue with - NeartoWomen</h2>
+					<a
+						href="https://github.com/kashyapanjali/neartowomenbackend"
+						target="_blank"
+						rel="noopener noreferrer">
 						Link
 					</a>
-					<p>I'm building my portfolio using HTML,CSS,JavaScript, MongoDB, React.js, Express.js, and Node.js, leveraging WebSocket technology to enable real-time updates on the portfolio page, seamlessly managed by the Admin.</p>				</div>
+					<p>
+						A secure and scalable <b className="bold">quick-commerce</b>{" "}
+						platform exclusively for women’s health products, offering menstrual
+						care, supplements, skincare, fitness, and medical devices. Users can
+						browse, filter, and purchase products with secure checkout, order
+						tracking, and personalized recommendations. The platform supports
+						multi-vendor selling, real-time notifications, and AI-driven product
+						suggestions, ensuring a seamless shopping experience.
+						<b className="bold">
+							Tech Stack: React.js (Next.js), Node.js, Express.js, MongoDB,
+							Redux.
+						</b>
+					</p>
+				</div>
 			</div>
 		</div>
 	);
