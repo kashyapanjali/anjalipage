@@ -20,7 +20,7 @@ function Work() {
 							href='https://github.com/kashyapanjali/womenapp'
 							target='_blank'
 							rel='noopener noreferrer'>
-							Link
+							| Link
 						</a>
 					</span>
 					<p>
