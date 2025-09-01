@@ -13,7 +13,7 @@ function Work() {
 						href='https://github.com/kashyapanjali/neartowomenbackend'
 						target='_blank'
 						rel='noopener noreferrer'>
-						Link
+						Link |
 					</a>
 					<span>
 						<a
@@ -33,7 +33,7 @@ function Work() {
 						suggestions, ensuring a seamless shopping experience.
 						<b className='bold'>
 							Tech Stack: CSS5, React.js, Node.js, Express.js, MongoDB, Payment
-							Gateway Redux.
+							Gateway, Redux.
 						</b>
 					</p>
 				</div>
