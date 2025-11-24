@@ -1,9 +1,10 @@
 .contact {
-	padding: 50px 16%;
+	padding: 40px 16%;
 	font-family: "Arial", sans-serif;
 	text-align: center;
 	position: relative;
 	overflow: hidden;
+	background: radial-gradient(circle at top, #111b36 0%, #05070f 55%);
 }
 
 .contact-title {
@@ -20,8 +21,6 @@
 }
 
 .contact-item {
-	flex: 1 1 200px;
-	margin: 10px;
 	padding: 15px;
 	text-align: center;
 	position: relative;
@@ -74,7 +73,7 @@
 @media (max-width: 768px) {
 	.contact-container {
 		flex-direction: column;
-		gap: 20px;
+		gap: 10px;
 	}
 	.contact-item {
 		animation: moveRandomMobile 3s ease-in-out infinite;

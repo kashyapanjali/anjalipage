@@ -10,19 +10,19 @@ function Skill() {
     frontend: [],
     backend: [],
     database: [],
-    tools: [],  //add here tools&Technology
-    others:[""]
+    tools: [],
+    others: [""],
   });
 
   const categoryDisplayNames = {
-    frontend: "Frontend ",
-    backend: "Backend ",
+    frontend: "Frontend",
+    backend: "Backend",
     database: "Database",
-    tools: "Tools & Technologies", // Updated category name
-    others:"Language"
+    tools: "Tools & Technologies",
+    others: "Languages",
   };
+
   useEffect(() => {
-    // Fetch portfolio data on mount
     const getPortfolioData = async () => {
       const data = await fetchPortfolio();
       if (data?.skills) setSkills(data.skills);
@@ -30,7 +30,6 @@ function Skill() {
 
     getPortfolioData();
 
-    // Listen for real-time updates
     socket.on("portfolioUpdated", (data) => {
       if (data.skills) setSkills(data.skills);
     });
@@ -40,16 +39,40 @@ function Skill() {
 
   return (
     <div className="skills">
-      <h1 className="skills-title">My Skills</h1>
-      <div className="skills-container">
+      <div className="skills-hero">
+        <div>
+          <p className="section-tag">Capabilities</p>
+          <h1 className="skills-title">Tech Stack</h1>
+          <p className="skills-subtitle">
+            A balanced mix of frontend craft, backend architecture, data engines,
+            and the tools that keep delivery fast and reliable.
+          </p>
+        </div>
+      </div>
+
+      <div className="skills-grid">
         {Object.entries(skills).map(([category, skillList]) => (
-          <div className="skills-category" key={category}>
-            <h2>{categoryDisplayNames[category] || category.charAt(0).toUpperCase() + category.slice(1)}</h2>
-            <ul>
-              {skillList.map((skill, index) => (
-                <li key={index}>{skill}</li>
-              ))}
-            </ul>
+          <div className="skill-card" key={category}>
+            <div className="skill-card-head">
+              <span className="skill-badge">
+                {String(categoryDisplayNames[category] || category).slice(0, 2)}
+              </span>
+              <h2>
+                {categoryDisplayNames[category] ||
+                  category.charAt(0).toUpperCase() + category.slice(1)}
+              </h2>
+            </div>
+            {skillList?.length ? (
+              <ul>
+                {skillList.map((skill, index) => (
+                  <li key={index} className="skill-pill">
+                    {skill}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="empty-state">No skills added yet.</p>
+            )}
           </div>
         ))}
       </div>

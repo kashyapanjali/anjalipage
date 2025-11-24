@@ -20,8 +20,15 @@ function Work() {
 							href='https://github.com/kashyapanjali/womenapp'
 							target='_blank'
 							rel='noopener noreferrer'>
-							| Link
+							Link
 						</a>
+					</span>
+					<span>
+						<a href='https://neartowomen.netlify.app/'
+							target='_blank'
+							rel='noopener noreferrer'>
+							| Link
+					    </a>
 					</span>
 					<p>
 						A secure and scalable <b className='bold'>quick-commerce</b>{" "}

@@ -2,12 +2,12 @@
 
 .about {
 	padding: 70px 16%;
-	margin-top: 40px;
 	font-family: "Arial", sans-serif;
 	display: flex;
 	justify-content: space-between;
 	align-items: flex-start;
 	gap: 350px;
+	background: radial-gradient(circle at top, #111b36 0%, #05070f 55%);
 }
 .about p {
 	line-height: 1.5;

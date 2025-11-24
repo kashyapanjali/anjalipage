@@ -141,15 +141,15 @@
   cursor: pointer;
 }
 
-.skills-container,
-.certificates-container {
+.admin-skills-container,
+.admin-certificates-container {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
 }
 
-.skills-category,
-.certificate-category {
+.admin-skill-card,
+.admin-certificate-card {
   flex: 1 1 200px;
   background: rgba(10, 14, 28, 0.6);
   border-radius: 16px;
@@ -157,14 +157,14 @@
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.skills-category h4,
-.certificate-category h4 {
+.admin-skill-card h4,
+.admin-certificate-card h4 {
   margin: 0 0 10px;
   color: #8bb4ff;
 }
 
-.skills-category ul,
-.certificate-category ul {
+.admin-skill-card ul,
+.admin-certificate-card ul {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -173,20 +173,20 @@
   gap: 8px;
 }
 
-.skills-category li,
-.certificate-category li {
+.admin-skill-card li,
+.admin-certificate-card li {
   background: rgba(255, 255, 255, 0.05);
   padding: 6px 12px;
   border-radius: 999px;
   font-size: 13px;
 }
 
-.certificate-category a {
+.admin-certificate-card a {
   color: #8bb4ff;
   text-decoration: none;
 }
 
-.certificate-category a:hover {
+.admin-certificate-card a:hover {
   text-decoration: underline;
 }
 

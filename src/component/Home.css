@@ -1,13 +1,8 @@
-/**
- * General Reset
- *
- * @format
- */
+/** @format */
 
-body {
-	margin: 0;
-	font-family: "Arial", sans-serif;
-	background-color: #121212;
+.home {
+	min-height: calc(100vh - 80px);
+	background: radial-gradient(circle at top, #111b36 0%, #05070f 55%);
 	color: white;
 }
 
@@ -57,9 +52,9 @@ body {
 }
 
 .hero-image .profile-photo {
-	border-radius:0;
+	border-radius:2px;
 	width: 350px;
-	height: 270px;
+	height: 275px;
 	cursor: pointer;
 	box-shadow: 0px 0px 10px rgba(168, 102, 89, 0.6); /* Light reddish box shadow */
 }
@@ -126,8 +121,8 @@ body {
 	}
 
 	.hero-image .profile-photo {
-		width: 150px;
-		height: 150px;
+		width: 200px;
+		height: 250px;
 	}
 	.company-logos {
 		margin-bottom: 50px;

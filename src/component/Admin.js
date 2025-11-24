@@ -230,9 +230,9 @@ const Admin = () => {
                 + Add Skill
               </button>
             </div>
-            <div className="skills-container">
+            <div className="admin-skills-container">
               {Object.entries(skills).map(([category, skillList]) => (
-                <div key={category} className="skills-category">
+                <div key={category} className="admin-skill-card">
                   <h4>{category.charAt(0).toUpperCase() + category.slice(1)}</h4>
                   {skillList.length ? (
                     <ul>
@@ -262,9 +262,9 @@ const Admin = () => {
                 + Add Certificate
               </button>
             </div>
-            <div className="certificates-container">
+            <div className="admin-certificates-container">
               {Object.entries(certificates).map(([category, certList]) => (
-                <div key={category} className="certificate-category">
+                <div key={category} className="admin-certificate-card">
                   <h4>{category}</h4>
                   {certList.length ? (
                     <ul>
