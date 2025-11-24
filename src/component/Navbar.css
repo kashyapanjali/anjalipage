@@ -5,11 +5,15 @@
  */
 
 .navbar {
+	position: sticky;
+	top: 0;
+	z-index: 1000;
 	display: flex;
 	justify-content: center;
 	gap: 75px;
-	padding: 30px 8px;
-	background-color: #3d3d3d;
+	padding: 18px 8px;
+	background-color: rgba(61, 61, 61, 0.95);
+	backdrop-filter: blur(6px);
 	flex-wrap: wrap;
 }
 
