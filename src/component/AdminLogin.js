@@ -1,7 +1,8 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase"; // Firebase instance
+import { auth } from "../firebase";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./AdminLogin.css";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -10,50 +11,65 @@ const AdminLogin = () => {
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-    e.preventDefault(); // Prevent form reload
-  
+    e.preventDefault();
+
     try {
-      // Sign in with Firebase Authentication
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-  
-      // Get Firebase ID Token
-      const token = await user.getIdToken(); // Get the ID token after successful login
-  
-      // Store Token in LocalStorage
+
+      const token = await user.getIdToken();
       localStorage.setItem("token", token);
-        // Redirect to Admin Dashboard
       navigate("/admin");
-  
     } catch (error) {
       console.error("Login failed:", error.message);
       setError("Invalid credentials. Please try again.");
     }
   };
-  
+
   return (
-    <div>
-      <h2>Admin Login</h2>
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          autoComplete="email"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          autoComplete="current-password"
-        />
-        <button type="submit">Login</button>
-      </form>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+    <div className="admin-login">
+      <div className="login-card">
+        <div className="login-head">
+          <p className="section-tag">Secure access</p>
+          <h2>Admin Login</h2>
+          <p className="subtext">
+            Enter your admin credentials to manage portfolio content. This portal
+            is secured with Firebase authentication.
+          </p>
+        </div>
+
+        <form onSubmit={handleLogin} className="login-form">
+          <label className="field">
+            <span>Email address</span>
+            <input
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              autoComplete="email"
+            />
+          </label>
+
+          <label className="field">
+            <span>Password</span>
+            <input
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              autoComplete="current-password"
+            />
+          </label>
+
+          {error && <p className="error-text">{error}</p>}
+
+          <button type="submit" className="login-button">
+            Login
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

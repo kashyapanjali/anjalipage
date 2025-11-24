@@ -172,102 +172,221 @@ const Admin = () => {
 
   return (
     <div className="admin">
-      <h2>Admin Panel</h2>
-      {user && <p>Welcome, {user.email}!</p>}
-      <button onClick={handleLogout} className="logout-button">Logout</button>
-
-      <div className="admin-content">
-        {/* Profile Picture Section */}
-        <div className="admin-section">
-          <h3>Profile Picture</h3>
-          <img src={profilePic || "/default-profile.png"} alt="Profile" className="profile-pic" />
-          <input type="file" accept="image/*" onChange={handleProfilePicUpload} />
-        </div>
-
-        {/* Skills Section */}
-        <div className="admin-section">
-          <h3>Skills Management</h3>
-          <div className="skills-container">
-            {Object.entries(skills).map(([category, skillList]) => ( //add new dropdown others
-              <div key={category} className="skills-category">
-                <h4>{category.charAt(0).toUpperCase() + category.slice(1)}</h4>
-                <ul>
-                  {skillList.map((skill, index) => (
-                    <li key={index}>{skill}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+      <div className="admin-card">
+        <header className="admin-header">
+          <div>
+            <p className="section-tag">Dashboard</p>
+            <h2>Portfolio Control Room</h2>
+            <p className="subtext">
+              Update skills, certificates, and your public avatar. Every change
+              is pushed in real time to the public site.
+            </p>
           </div>
-          <button className="add-button" onClick={() => setShowSkillForm(true)}>+</button>
-          {showSkillForm && (
-            <div className="add-form">
-              <select value={selectedSkillCategory} onChange={(e) => setSelectedSkillCategory(e.target.value)} className="dropdown">
+          <div className="header-actions">
+            {user && <span className="welcome-chip">{user.email}</span>}
+            <button onClick={handleLogout} className="logout-button">
+              Logout
+            </button>
+          </div>
+        </header>
+
+        <div className="admin-content">
+          {/* Profile Picture Section */}
+          <section className="admin-section">
+            <div className="section-head">
+              <div>
+                <p className="section-tag">Profile</p>
+                <h3>Profile Picture</h3>
+              </div>
+            </div>
+            <div className="profile-card">
+              <img
+                src={profilePic || "/default-profile.png"}
+                alt="Profile"
+                className="profile-pic"
+              />
+              <label className="upload-label">
+                <span>Upload new avatar</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleProfilePicUpload}
+                />
+              </label>
+            </div>
+          </section>
+
+          {/* Skills Section */}
+          <section className="admin-section">
+            <div className="section-head">
+              <div>
+                <p className="section-tag">Skills</p>
+                <h3>Skills Management</h3>
+              </div>
+              <button
+                className="add-button"
+                onClick={() => setShowSkillForm(true)}
+              >
+                + Add Skill
+              </button>
+            </div>
+            <div className="skills-container">
+              {Object.entries(skills).map(([category, skillList]) => (
+                <div key={category} className="skills-category">
+                  <h4>{category.charAt(0).toUpperCase() + category.slice(1)}</h4>
+                  {skillList.length ? (
+                    <ul>
+                      {skillList.map((skill, index) => (
+                        <li key={index}>{skill}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="empty-state">No skills yet</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Certificates Section */}
+          <section className="admin-section">
+            <div className="section-head">
+              <div>
+                <p className="section-tag">Certificates</p>
+                <h3>Certificates Management</h3>
+              </div>
+              <button
+                className="add-button"
+                onClick={() => setShowCertForm(true)}
+              >
+                + Add Certificate
+              </button>
+            </div>
+            <div className="certificates-container">
+              {Object.entries(certificates).map(([category, certList]) => (
+                <div key={category} className="certificate-category">
+                  <h4>{category}</h4>
+                  {certList.length ? (
+                    <ul>
+                      {certList.map((link, index) => (
+                        <li key={index}>
+                          <a href={link} target="_blank" rel="noopener noreferrer">
+                            Certificate {index + 1}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="empty-state">No certificates yet</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+        {message && <p className="message">{message}</p>}
+      </div>
+
+      {showSkillForm && (
+        <div className="form-modal" role="dialog" aria-modal="true">
+          <div className="modal-content">
+            <div className="modal-head">
+              <h3>Add Skills</h3>
+              <button
+                className="close-button"
+                onClick={() => setShowSkillForm(false)}
+                aria-label="Close skill form"
+              >
+                ×
+              </button>
+            </div>
+            <label className="field">
+              <span>Category</span>
+              <select
+                value={selectedSkillCategory}
+                onChange={(e) => setSelectedSkillCategory(e.target.value)}
+              >
                 <option value="">Select Category</option>
                 <option value="frontend">Frontend</option>
                 <option value="backend">Backend</option>
                 <option value="database">Database</option>
                 <option value="tools">Tools</option>
+                <option value="others">Others</option>
               </select>
+            </label>
+            <label className="field">
+              <span>Skills</span>
               <input
                 type="text"
-                placeholder="Enter skills (comma-separated)"
+                placeholder="Enter skills separated by commas"
                 value={newSkill}
                 onChange={(e) => setNewSkill(e.target.value)}
               />
-              <div className="form-buttons">
-                <button onClick={handleAddSkill} className="save-button">Add Skill</button>
-                <button onClick={() => setShowSkillForm(false)} className="cancel-button">Cancel</button>
-              </div>
+              <small>Example: React, Node, MongoDB</small>
+            </label>
+            <div className="form-buttons">
+              <button onClick={handleAddSkill} className="save-button">
+                Save
+              </button>
+              <button
+                onClick={() => setShowSkillForm(false)}
+                className="cancel-button"
+              >
+                Cancel
+              </button>
             </div>
-          )}
-        </div>
-
-        {/* Certificates Section */}
-        <div className="admin-section">
-          <h3>Certificates Management</h3>
-          <div className="certificates-container">
-            {Object.entries(certificates).map(([category, certList]) => (
-              <div key={category} className="certificate-category">
-                <h4>{category}</h4>
-                <ul>
-                  {certList.map((link, index) => (
-                    <li key={index}>
-                      <a href={link} target="_blank" rel="noopener noreferrer">
-                        Certificate {index + 1}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
           </div>
+        </div>
+      )}
 
-          <button className="add-button" onClick={() => setShowCertForm(true)}>+</button>
-
-          {showCertForm && (
-            <div className="add-form">
-              <select value={selectedCertCategory} onChange={(e) => setSelectedCertCategory(e.target.value)} className="dropdown">
+      {showCertForm && (
+        <div className="form-modal" role="dialog" aria-modal="true">
+          <div className="modal-content">
+            <div className="modal-head">
+              <h3>Add Certificate</h3>
+              <button
+                className="close-button"
+                onClick={() => setShowCertForm(false)}
+                aria-label="Close certificate form"
+              >
+                ×
+              </button>
+            </div>
+            <label className="field">
+              <span>Category</span>
+              <select
+                value={selectedCertCategory}
+                onChange={(e) => setSelectedCertCategory(e.target.value)}
+              >
                 <option value="">Select Category</option>
                 <option value="Internship">Internship</option>
                 <option value="Course">Course</option>
                 <option value="Completion">Completion</option>
               </select>
+            </label>
+            <label className="field">
+              <span>Certificate URL</span>
               <input
-                type="text"
-                placeholder="Enter certificate link"
+                type="url"
+                placeholder="https://example.com/certificate"
                 value={newCertLink}
                 onChange={(e) => setNewCertLink(e.target.value)}
               />
-              <div className="form-buttons">
-                <button onClick={handleAddCertificate} className="save-button">Add Certificate</button>
-                <button onClick={() => setShowCertForm(false)} className="cancel-button">Cancel</button>
-              </div>
+            </label>
+            <div className="form-buttons">
+              <button onClick={handleAddCertificate} className="save-button">
+                Save
+              </button>
+              <button
+                onClick={() => setShowCertForm(false)}
+                className="cancel-button"
+              >
+                Cancel
+              </button>
             </div>
-          )}
+          </div>
         </div>
-      </div>
-      {message && <p className="message">{message}</p>}
+      )}
     </div>
   );
 };
