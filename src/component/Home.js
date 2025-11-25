@@ -1,29 +1,68 @@
 import React, { useEffect, useState } from "react";
 import { fetchPortfolio } from "../api";
 import { io } from "socket.io-client";
+import Loader from "./Loader";
 import "./Home.css";
 
 const socket = io("https://anjalipagebackend.onrender.com");
 
 function Home() {
     const [profilePic, setProfilePic] = useState("https://via.placeholder.com/200");
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
     useEffect(() => {
+        let isMounted = true;
+
         // Fetch portfolio data on mount
         const getPortfolioData = async () => {
-            const data = await fetchPortfolio();
-            if (data?.profilePic) setProfilePic(data.profilePic);
+            try {
+                const data = await fetchPortfolio();
+                if (!isMounted) return;
+                if (data?.profilePic) {
+                    setProfilePic(data.profilePic);
+                    setError("");
+                } else if (!data) {
+                    setError("Unable to load the latest profile image. Please retry in a moment.");
+                }
+            } finally {
+                if (isMounted) setLoading(false);
+            }
         };
 
         getPortfolioData();
 
-        // Listen for real-time updates
-        socket.on("portfolioUpdated", (data) => {
-            if (data.profilePic) setProfilePic(data.profilePic);
-        });
+        const handleRealtimeUpdate = (data) => {
+            if (data.profilePic) {
+                setProfilePic(data.profilePic);
+                setError("");
+            }
+        };
 
-        return () => socket.off("portfolioUpdated");
+        // Listen for real-time updates
+        socket.on("portfolioUpdated", handleRealtimeUpdate);
+
+        return () => {
+            isMounted = false;
+            socket.off("portfolioUpdated", handleRealtimeUpdate);
+        };
     }, []);
+
+    if (loading) {
+        return (
+            <div className="home">
+                <Loader message="Loading portfolio..." />
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="home">
+                <Loader variant="error" message={error} />
+            </div>
+        );
+    }
 
     return (
         <div className="home">

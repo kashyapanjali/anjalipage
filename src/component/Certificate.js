@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchPortfolio } from "../api"; // API call function
 import { io } from "socket.io-client";
+import Loader from "./Loader";
 import "./Certificate.css";
 
 const socket = io("https://anjalipagebackend.onrender.com");
@@ -11,6 +12,8 @@ function Certificate() {
     Course: [],
     Completion: [],
   });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const categoryDisplayNames = {
     Internship: "Intern Certificates",
@@ -19,31 +22,61 @@ function Certificate() {
   };
 
   useEffect(() => {
+    let isMounted = true;
+
+    const normaliseCertificates = (payload) => ({
+      Internship: payload?.certificates?.Internship || [],
+      Course: payload?.certificates?.Course || [],
+      Completion: payload?.certificates?.Completion || [],
+    });
+
     const getPortfolioData = async () => {
-      const data = await fetchPortfolio();
-      if (data?.certificates) {
-        setCertificates({
-          Internship: data.certificates.Internship || [],
-          Course: data.certificates.Course || [],
-          Completion: data.certificates.Completion || [],
-        });
+      try {
+        const data = await fetchPortfolio();
+        if (!isMounted) return;
+        if (data?.certificates) {
+          setCertificates(normaliseCertificates(data));
+          setError("");
+        } else if (!data) {
+          setError("Certificates are taking longer than usual to load.");
+        }
+      } finally {
+        if (isMounted) setLoading(false);
       }
     };
 
     getPortfolioData();
 
-    socket.on("portfolioUpdated", (data) => {
+    const handleRealtimeUpdate = (data) => {
       if (data?.certificates) {
-        setCertificates({
-          Internship: data.certificates.Internship || [],
-          Course: data.certificates.Course || [],
-          Completion: data.certificates.Completion || [],
-        });
+        setCertificates(normaliseCertificates(data));
+        setError("");
       }
-    });
+    };
 
-    return () => socket.off("portfolioUpdated");
+    socket.on("portfolioUpdated", handleRealtimeUpdate);
+
+    return () => {
+      isMounted = false;
+      socket.off("portfolioUpdated", handleRealtimeUpdate);
+    };
   }, []);
+
+  if (loading) {
+    return (
+      <div className="certificate-page">
+        <Loader message="Loading certificates..." />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="certificate-page">
+        <Loader variant="error" message={error} />
+      </div>
+    );
+  }
 
   return (
     <div className="certificate-page">

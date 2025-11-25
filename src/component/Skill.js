@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { fetchPortfolio } from "../api";
+import Loader from "./Loader";
 import "./Skill.css";
 
 const socket = io("https://anjalipagebackend.onrender.com");
@@ -13,6 +14,8 @@ function Skill() {
     tools: [],
     others: [""],
   });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const categoryDisplayNames = {
     frontend: "Frontend",
@@ -23,19 +26,55 @@ function Skill() {
   };
 
   useEffect(() => {
+    let isMounted = true;
+
     const getPortfolioData = async () => {
-      const data = await fetchPortfolio();
-      if (data?.skills) setSkills(data.skills);
+      try {
+        const data = await fetchPortfolio();
+        if (!isMounted) return;
+        if (data?.skills) {
+          setSkills(data.skills);
+          setError("");
+        } else if (!data) {
+          setError("Unable to load skills right now. Refresh in a moment.");
+        }
+      } finally {
+        if (isMounted) setLoading(false);
+      }
     };
 
     getPortfolioData();
 
-    socket.on("portfolioUpdated", (data) => {
-      if (data.skills) setSkills(data.skills);
-    });
+    const handleRealtimeUpdate = (data) => {
+      if (data.skills) {
+        setSkills(data.skills);
+        setError("");
+      }
+    };
 
-    return () => socket.off("portfolioUpdated");
+    socket.on("portfolioUpdated", handleRealtimeUpdate);
+
+    return () => {
+      isMounted = false;
+      socket.off("portfolioUpdated", handleRealtimeUpdate);
+    };
   }, []);
+
+  if (loading) {
+    return (
+      <div className="skills">
+        <Loader message="Loading skills..." />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="skills">
+        <Loader variant="error" message={error} />
+      </div>
+    );
+  }
 
   return (
     <div className="skills">
