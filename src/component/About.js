@@ -12,7 +12,7 @@ function About() {
 					<h2>Bachelor of Technology (B.Tech)</h2>
 					<p>Driems University(Odisha)</p>
 					<p>2022 - 2026</p>
-					<p>CGPA:9.17</p>
+					<p>CGPA:9.12</p>
 					<p className='instituteLink'>
 						<a href='https://www.driems.ac.in/'>College Link</a>
 					</p>
@@ -21,7 +21,7 @@ function About() {
 			<div className='about-container2'>
 				<h1>Highest Degree</h1>
 				<div className='education-item'>
-					<h2>Senior Secondary Education</h2>
+					<h2>Higher Secondary</h2>
 					<p>Sushant Public School(Bihar-Muzaffarpur)</p>
 					<p>2019 - 2021</p>
 					<p>Marks:72%</p>
@@ -32,7 +32,7 @@ function About() {
 					</p>
 				</div>
 				<div className='education-item'>
-					<h2>Secondary Education</h2>
+					<h2>Secondary School</h2>
 					<p>Sushant Public School(Bihar-Muzaffarpur)</p>
 					<p>2017 - 2019</p>
 					<p>Marks:79.2%</p>
