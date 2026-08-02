@@ -10,7 +10,7 @@ function About() {
 				<h1>Pursuing</h1>
 				<div className='education-item'>
 					<h2>Bachelor of Technology (B.Tech)</h2>
-					<p>Driems University(Odisha)</p>
+					<p>Driems University (Odisha)</p>
 					<p>2022 - 2026</p>
 					<p>CGPA:9.12</p>
 					<p className='instituteLink'>
