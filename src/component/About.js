@@ -22,7 +22,7 @@ function About() {
 				<h1>Highest Degree</h1>
 				<div className='education-item'>
 					<h2>Higher Secondary</h2>
-					<p>Sushant Public School(Bihar-Muzaffarpur)</p>
+					<p>Sushant Public School (Bihar-Muzaffarpur)</p>
 					<p>2019 - 2021</p>
 					<p>Marks:72%</p>
 					<p className='instituteLink'>
@@ -33,7 +33,7 @@ function About() {
 				</div>
 				<div className='education-item'>
 					<h2>Secondary School</h2>
-					<p>Sushant Public School(Bihar-Muzaffarpur)</p>
+					<p>Sushant Public School (Bihar-Muzaffarpur)</p>
 					<p>2017 - 2019</p>
 					<p>Marks:79.2%</p>
 					<p className='instituteLink'>
