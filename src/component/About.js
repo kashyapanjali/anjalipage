@@ -7,7 +7,7 @@ function About() {
 		<div className='about'>
 			{/* <h1>Education</h1> */}
 			<div className='about-container1'>
-				<h1>Pursuing</h1>
+				<h1>Graduate</h1>
 				<div className='education-item'>
 					<h2>Bachelor of Technology (B.Tech)</h2>
 					<p>Driems University (Odisha)</p>
