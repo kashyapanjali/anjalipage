@@ -123,7 +123,7 @@ function Home() {
 				</div>
 				<div className='logo'>
 					<a
-						href='https://www.instagram.com/anjali_kashyap997/'
+						href='https://www.instagram.com/anjalika_shyap/'
 						target='_blank'
 						rel='noopener noreferrer'>
 						<i className='fab fa-instagram'></i>

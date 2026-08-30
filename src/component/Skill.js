@@ -80,8 +80,7 @@ function Skill() {
     <div className="skills">
       <div className="skills-hero">
         <div>
-          <p className="section-tag">Capabilities</p>
-          <h1 className="skills-title">Tech Stack</h1>
+          <h1 className="skills-title">Technical Skills</h1>
           <p className="skills-subtitle">
             A balanced mix of frontend craft, backend architecture, data engines,
             and the tools that keep delivery fast and reliable.

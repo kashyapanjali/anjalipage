@@ -82,7 +82,7 @@ function Certificate() {
     <div className="certificate-page">
       <div className="certificate-hero">
         <p className="section-tag">Milestones</p>
-        <h1 className="certificate-title">Verified Achievements</h1>
+        <h1 className="certificate-title">Achievements</h1>
         <p className="certificate-subtitle">
           Highlights of internships, coursework, and completion credentials that
           validate hands-on learning and domain expertise.

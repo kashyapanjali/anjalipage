@@ -5,7 +5,7 @@ import "./Work.css";
 function Work() {
 	return (
 		<div className='work'>
-			<h1 className='work-title'>Recent Work Project</h1>
+			<h1 className='work-title'>Work Project</h1>
 			<div className='work-container'>
 				<div className='work-item'>
 					<h2>Continue with - NeartoWomen</h2>
@@ -28,16 +28,14 @@ function Work() {
 							target='_blank'
 							rel='noopener noreferrer'>
 							| Link
-					    </a>
+						</a>
 					</span>
 					<p>
 						A secure and scalable <b className='bold'>quick-commerce</b>{" "}
 						platform exclusively for women’s health products, offering menstrual
 						care, supplements, skincare, fitness, and medical devices. Users can
 						browse, filter, and purchase products with secure checkout, order
-						tracking, and personalized recommendations. The platform supports
-						multi-vendor selling, real-time notifications, and AI-driven product
-						suggestions, ensuring a seamless shopping experience.
+						tracking.
 						<b className='bold'>
 							Tech Stack: CSS5, React.js, Node.js, Express.js, MongoDB, Payment
 							Gateway, Redux.

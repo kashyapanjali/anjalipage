@@ -34,10 +34,23 @@ const Admin = () => {
   const [selectedCertCategory, setSelectedCertCategory] = useState("");
   const [newSkill, setNewSkill] = useState("");
   const [newCertLink, setNewCertLink] = useState("");
-  const [message, setMessage] = useState("");
+  const [popup, setPopup] = useState(null);
   const [uploadingPic, setUploadingPic] = useState(false);
   const [uploadingResume, setUploadingResume] = useState(false);
   const navigate = useNavigate();
+
+  const showPopup = (text, type = "success") => {
+    setPopup({ text, type });
+  };
+
+  useEffect(() => {
+    if (popup) {
+      const timer = setTimeout(() => {
+        setPopup(null);
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [popup]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -102,11 +115,11 @@ const Admin = () => {
       });
 
       setProfilePic(response.data.profilePic);
-      setMessage("Profile picture updated successfully!");
+      showPopup("Profile picture uploaded successfully!", "success");
       socket.emit("portfolioUpdated", { profilePic: response.data.profilePic, resume, skills, certificates });
     } catch (error) {
       console.error("Error uploading profile picture:", error);
-      setMessage("Failed to update profile picture.");
+      showPopup("Failed to update profile picture.", "error");
     } finally {
       setUploadingPic(false);
     }
@@ -131,11 +144,11 @@ const Admin = () => {
       });
 
       setResume(response.data.resume);
-      setMessage("Resume uploaded successfully!");
+      showPopup("Resume uploaded successfully!", "success");
       socket.emit("portfolioUpdated", { profilePic, resume: response.data.resume, skills, certificates });
     } catch (error) {
       console.error("Error uploading resume:", error);
-      setMessage("Failed to upload resume.");
+      showPopup("Failed to upload resume.", "error");
     } finally {
       setUploadingResume(false);
     }
@@ -143,7 +156,7 @@ const Admin = () => {
   
   const handleAddSkill = async () => {
     if (!selectedSkillCategory || newSkill.trim() === "") {
-      setMessage("Please select a category and enter a skill.");
+      showPopup("Please select a category and enter a skill.", "error");
       return;
     }
   
@@ -161,22 +174,22 @@ const Admin = () => {
         },
       });
   
-      const updatedSkills = { ...skills, [selectedSkillCategory]: [...skills[selectedSkillCategory], ...skillsArray] };
+      const updatedSkills = { ...skills, [selectedSkillCategory]: [...(skills[selectedSkillCategory] || []), ...skillsArray] };
       setSkills(updatedSkills);
-      setMessage("Skills added successfully!");
+      showPopup("Skills added successfully!", "success");
       socket.emit("portfolioUpdated", { skills: updatedSkills, certificates });
       setNewSkill("");
       setSelectedSkillCategory("");
       setShowSkillForm(false);
     } catch (error) {
       console.error("Error adding skill:", error);
-      setMessage("Error adding skill. Please try again.");
+      showPopup("Error adding skill. Please try again.", "error");
     }
   };
   
   const handleAddCertificate = async () => {
     if (!selectedCertCategory || !newCertLink.trim()) {
-      setMessage("Please select a category and enter a certificate link.");
+      showPopup("Please select a category and enter a certificate link.", "error");
       return;
     }
   
@@ -193,16 +206,19 @@ const Admin = () => {
       });
   
       const updatedCertificates = { ...certificates };
+      if (!updatedCertificates[selectedCertCategory]) {
+        updatedCertificates[selectedCertCategory] = [];
+      }
       updatedCertificates[selectedCertCategory].push(newCertLink);
       setCertificates(updatedCertificates);
-      setMessage("Certificate added successfully!");
+      showPopup("Certificate added successfully!", "success");
       socket.emit("portfolioUpdated", { skills, certificates: updatedCertificates });
       setNewCertLink("");
       setSelectedCertCategory("");
       setShowCertForm(false);
     } catch (error) {
       console.error("Error adding certificate:", error);
-      setMessage("Error adding certificate. Please try again.");
+      showPopup("Error adding certificate. Please try again.", "error");
     }
   };
   
@@ -218,6 +234,25 @@ const Admin = () => {
 
   return (
     <div className="admin">
+      {/* Top Floating Notification Popup */}
+      {popup && (
+        <div className={`top-popup-banner ${popup.type}`} role="alert">
+          <div className="top-popup-content">
+            <span className="top-popup-icon">
+              {popup.type === "success" ? "✓" : popup.type === "error" ? "✕" : "ℹ"}
+            </span>
+            <span className="top-popup-text">{popup.text}</span>
+          </div>
+          <button
+            className="top-popup-close"
+            onClick={() => setPopup(null)}
+            aria-label="Close notification"
+          >
+            ×
+          </button>
+        </div>
+      )}
+
       <div className="admin-card">
         <header className="admin-header">
           <div>
@@ -361,7 +396,6 @@ const Admin = () => {
             </div>
           </section>
         </div>
-        {message && <p className="message">{message}</p>}
       </div>
 
       {showSkillForm && (

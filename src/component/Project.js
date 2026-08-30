@@ -22,14 +22,7 @@ function Project() {
 			link: "https://anjali-weather-app.netlify.app/",
 			description:
 				"Developed a weather application using React.js and JavaScript, integrating the OpenWeather API for real-time forecasts. It features Google OAuth for secure authentication and AI-powered recommendations based on user location. I also implemented a real-time feedback system using Firebase Realtime Database to enhance user engagement and experience.",
-		},
-
-		{
-			title: "Employee Management System(2023)",
-			link: "https://employee-manage-app.netlify.app/",
-			description:
-				"A full-stack web application developed using React.js, Tailwind CSS, and Bootstrap on the frontend, with Node.js, Express.js, and MongoDB powering the backend. It features secure user google authentication using JWT, allowing only authorized users to access and manage data. The system supports full CRUD operations for employee records, including the ability to upload and update profile pictures.",
-		},
+		}
 	];
 
 	return (
