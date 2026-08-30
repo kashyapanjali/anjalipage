@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { fetchPortfolio } from "../api"; // API call function
+import { fetchPortfolio, SERVER_URL } from "../api"; // API call function
 import { io } from "socket.io-client";
 import Loader from "./Loader";
 import "./Certificate.css";
 
-const socket = io("https://anjalipagebackend.onrender.com");
+const socket = io(SERVER_URL);
 
 function Certificate() {
   const [certificates, setCertificates] = useState({

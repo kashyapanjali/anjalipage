@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import { fetchPortfolio } from "../api";
+import { fetchPortfolio, SERVER_URL } from "../api";
 import Loader from "./Loader";
 import "./Skill.css";
 
-const socket = io("https://anjalipagebackend.onrender.com");
+const socket = io(SERVER_URL);
 
 function Skill() {
   const [skills, setSkills] = useState({

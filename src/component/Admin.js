@@ -4,19 +4,24 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { io } from "socket.io-client";
+import { API_BASE_URL, SERVER_URL } from "../api";
 import "./Admin.css";
 
-const socket = io("https://anjalipagebackend.onrender.com");
+const socket = io(SERVER_URL);
+
+const DEFAULT_AVATAR =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 24 24' fill='%238bb4ff'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm0 14c-2.03 0-3.8-1.04-4.84-2.61.03-1.61 3.23-2.49 4.84-2.49 1.6 0 4.8.88 4.84 2.49C15.8 18.96 14.03 20 12 20z'/%3E%3C/svg%3E";
 
 const Admin = () => {
   const [user, setUser] = useState(null);
   const [profilePic, setProfilePic] = useState("");
+  const [resume, setResume] = useState("");
   const [skills, setSkills] = useState({
     frontend: [],
     backend: [],
     database: [],
     tools: [],
-    others:[]
+    others: [],
   });
   const [certificates, setCertificates] = useState({
     Internship: [],
@@ -30,9 +35,9 @@ const Admin = () => {
   const [newSkill, setNewSkill] = useState("");
   const [newCertLink, setNewCertLink] = useState("");
   const [message, setMessage] = useState("");
+  const [uploadingPic, setUploadingPic] = useState(false);
+  const [uploadingResume, setUploadingResume] = useState(false);
   const navigate = useNavigate();
-
-  const API_BASE_URL = "https://anjalipagebackend.onrender.com/api/users";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,19 +48,28 @@ const Admin = () => {
           navigate("/login");
           return;
         }
-  
+
         console.log("Token from localStorage:", token);
-  
+
         const response = await axios.get(`${API_BASE_URL}/admin-dashboard`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-  
+
         console.log("Admin Data Fetched:", response.data);
+
+        // Fetch current portfolio data (profilePic, resume, skills, certificates)
+        const portfolioRes = await axios.get(`${API_BASE_URL}/portfolio`);
+        if (portfolioRes.data) {
+          if (portfolioRes.data.profilePic) setProfilePic(portfolioRes.data.profilePic);
+          if (portfolioRes.data.resume) setResume(portfolioRes.data.resume);
+          if (portfolioRes.data.skills) setSkills((prev) => ({ ...prev, ...portfolioRes.data.skills }));
+          if (portfolioRes.data.certificates) setCertificates((prev) => ({ ...prev, ...portfolioRes.data.certificates }));
+        }
       } catch (error) {
         console.error("Error fetching admin data:", error.response?.data?.message || error.message);
       }
     };
-  
+
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
@@ -64,34 +78,66 @@ const Admin = () => {
         navigate("/login");
       }
     });
-  
+
     return () => unsubscribe();
   }, [navigate]); // Only `navigate` is a dependency
-  
+
 
   const handleProfilePicUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-  
+
     try {
+      setUploadingPic(true);
       const token = await user.getIdToken(); // Fetch token from Firebase auth
-  
+
       const formData = new FormData();
       formData.append("profilePic", file);
-  
+
       const response = await axios.put(`${API_BASE_URL}/admin/profile-pic`, formData, {
         headers: {
           Authorization: `Bearer ${token}`, // Attach the token
           "Content-Type": "multipart/form-data",
         },
       });
-  
+
       setProfilePic(response.data.profilePic);
       setMessage("Profile picture updated successfully!");
-      socket.emit("portfolioUpdated", { profilePic: response.data.profilePic, skills, certificates });
+      socket.emit("portfolioUpdated", { profilePic: response.data.profilePic, resume, skills, certificates });
     } catch (error) {
       console.error("Error uploading profile picture:", error);
       setMessage("Failed to update profile picture.");
+    } finally {
+      setUploadingPic(false);
+    }
+  };
+
+  const handleResumeUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      setUploadingResume(true);
+      const token = await user.getIdToken();
+
+      const formData = new FormData();
+      formData.append("resume", file);
+
+      const response = await axios.put(`${API_BASE_URL}/admin/resume`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      setResume(response.data.resume);
+      setMessage("Resume uploaded successfully!");
+      socket.emit("portfolioUpdated", { profilePic, resume: response.data.resume, skills, certificates });
+    } catch (error) {
+      console.error("Error uploading resume:", error);
+      setMessage("Failed to upload resume.");
+    } finally {
+      setUploadingResume(false);
     }
   };
   
@@ -191,28 +237,59 @@ const Admin = () => {
         </header>
 
         <div className="admin-content">
-          {/* Profile Picture Section */}
+          {/* Profile Picture & Resume Section */}
           <section className="admin-section">
             <div className="section-head">
               <div>
-                <p className="section-tag">Profile</p>
-                <h3>Profile Picture</h3>
+                <p className="section-tag">Profile & Media</p>
+                <h3>Profile & Resume</h3>
               </div>
             </div>
             <div className="profile-card">
               <img
-                src={profilePic || "/default-profile.png"}
+                src={profilePic || DEFAULT_AVATAR}
                 alt="Profile"
                 className="profile-pic"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = DEFAULT_AVATAR;
+                }}
               />
               <label className="upload-label">
-                <span>Upload new avatar</span>
+                <span>{uploadingPic ? "Uploading avatar..." : "Upload new avatar"}</span>
                 <input
                   type="file"
                   accept="image/*"
                   onChange={handleProfilePicUpload}
+                  disabled={uploadingPic}
                 />
               </label>
+
+              <div className="resume-container">
+                <div className="resume-status">
+                  {resume ? (
+                    <a
+                      href={resume}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="view-resume-link"
+                    >
+                      📄 View Current Resume
+                    </a>
+                  ) : (
+                    <span className="empty-state">No resume uploaded yet</span>
+                  )}
+                </div>
+                <label className="upload-label resume-upload-btn">
+                  <span>{uploadingResume ? "Uploading resume..." : "Upload Resume"}</span>
+                  <input
+                    type="file"
+                    accept=".pdf,.doc,.docx"
+                    onChange={handleResumeUpload}
+                    disabled={uploadingResume}
+                  />
+                </label>
+              </div>
             </div>
           </section>
 

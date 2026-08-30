@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { fetchPortfolio } from "../api";
+import { fetchPortfolio, SERVER_URL } from "../api";
 import { io } from "socket.io-client";
 import Loader from "./Loader";
 import "./Home.css";
 
-const socket = io("https://anjalipagebackend.onrender.com");
+const socket = io(SERVER_URL);
 
 function Home() {
 	const [profilePic, setProfilePic] = useState(
 		"https://via.placeholder.com/200",
 	);
+	const [resume, setResume] = useState("");
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState("");
 
@@ -24,7 +25,11 @@ function Home() {
 				if (data?.profilePic) {
 					setProfilePic(data.profilePic);
 					setError("");
-				} else if (!data) {
+				}
+				if (data?.resume) {
+					setResume(data.resume);
+				}
+				if (!data) {
 					setError(
 						"Unable to load the latest profile image. Please retry in a moment.",
 					);
@@ -40,6 +45,9 @@ function Home() {
 			if (data.profilePic) {
 				setProfilePic(data.profilePic);
 				setError("");
+			}
+			if (data.resume) {
+				setResume(data.resume);
 			}
 		};
 
@@ -84,7 +92,7 @@ function Home() {
 						reality with creativity, innovation, and precision.
 					</p>
 					<a
-						href='/Resume_Anjali.pdf'
+						href={resume || "/Resume_Anjali.pdf"}
 						target='_blank'
 						rel='noopener noreferrer'
 						className='cta-button'>
